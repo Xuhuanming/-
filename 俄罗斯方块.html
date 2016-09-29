@@ -1,0 +1,730 @@
+<!doctype html>
+<html>
+<head>
+<style type="text/css">
+div{width:18px;height:18px;position:absolute;border:1px solid red;}
+#container{width:200px;height:400px;background-color:blue;border:0px;position:relative;overflow:hidden;}
+#cal{width:200px;height:30px;background-color:red;border:0px;color:white;text-align:center;}
+</style>
+<script>
+window.onload=function(){
+var id,id_game;
+var key=0;
+var score=0;
+var id_suprise;
+
+function initiate(){
+for(var i=1;i<=20;i++)
+ for(var j=1;j<=10;j++)
+  {
+    var s=i+"-"+j;
+    document.getElementById(s).style.top=i*20-20+"px";
+     document.getElementById(s).style.left=j*20-20+"px";
+  }
+}
+initiate();
+//****************************折叠****************************
+function Zhedie(){
+var i=1;var j=5;var flaga=1;
+
+this.shape1=function(label){
+if(label==1){var color="yellow";}else{var color="blue";}
+document.getElementById(i+"-"+j).style.backgroundColor=color;
+document.getElementById(i+"-"+(j+1)).style.backgroundColor=color;
+document.getElementById((i+1)+"-"+j).style.backgroundColor=color;
+document.getElementById((i+1)+"-"+(j-1)).style.backgroundColor=color;
+document.onkeydown=function(event){
+if(document.getElementById((i+1+1)+"-"+j).style.backgroundColor!="yellow"&&document.getElementById((i+1+1)+"-"+(j-1)).style.backgroundColor!="yellow"&&document.getElementById((i+1)+"-"+(j+1)).style.backgroundColor!="yellow"&&i!=19&&event.keyCode==40)
+{zj.shape1(2);i++;zj.shape1(1);}
+if(j!=2&&event.keyCode==37&&document.getElementById(i+"-"+(j-1)).style.backgroundColor!="yellow"&&document.getElementById((i+1)+"-"+(j-1-1)).style.backgroundColor!="yellow")
+{zj.shape1(2);j--;zj.shape1(1);}
+if(j!=9&&event.keyCode==39&&document.getElementById(i+"-"+(j+1+1)).style.backgroundColor!="yellow"&&document.getElementById((i+1)+"-"+(j+1)).style.backgroundColor!="yellow")
+{zj.shape1(2);j++;zj.shape1(1);}
+//-------变形---------------
+if(event.keyCode==38&&document.getElementById((i+1+1)+"-"+j).style.backgroundColor!="yellow"&&document.getElementById((i+1+1)+"-"+(j-1)).style.backgroundColor!="yellow"&&i!=19)
+{zj.shape1(2);zj.shape2(1);flaga=2;}
+};
+};
+this.shape2=function(label){
+if(label==1){var color="yellow";}else{var color="blue";}
+document.getElementById(i+"-"+j).style.backgroundColor=color;
+document.getElementById((i+1)+"-"+j).style.backgroundColor=color;
+document.getElementById((i+1)+"-"+(j+1)).style.backgroundColor=color;
+document.getElementById((i+1+1)+"-"+(j+1)).style.backgroundColor=color;
+document.onkeydown=function(event){
+if(event.keyCode==40&&i!=18&&document.getElementById((i+1+1)+"-"+j).style.backgroundColor!="yellow"&&document.getElementById((i+1+1+1)+"-"+(j+1)).style.backgroundColor!="yellow")
+{zj.shape2(2);i++;zj.shape2(1);}
+if(event.keyCode==37&&j!=1&&document.getElementById(i+"-"+(j-1)).style.backgroundColor!="yellow"&&document.getElementById((i+1)+"-"+(j-1)).style.backgroundColor!="yellow"&&document.getElementById((i+1+1)+"-"+(j)).style.backgroundColor!="yellow")
+{zj.shape2(2);j--;zj.shape2(1);}
+if(event.keyCode==39&&j!=9&&document.getElementById(i+"-"+(j+1)).style.backgroundColor!="yellow"&&document.getElementById((i+1)+"-"+(j+1+1)).style.backgroundColor!="yellow"&&document.getElementById((i+1+1)+"-"+(j+1+1)).style.backgroundColor!="yellow")
+{zj.shape2(2);j++;zj.shape2(1);}
+//---------------变形--------------
+if(event.keyCode==38)
+{zj.shape2(2);zj.shape1(1);flaga=1;}
+};
+
+
+};
+
+this.run=function(){
+key=0;
+if(flaga==1){
+if(i==19){clearInterval(id);key=1;return;}
+if(document.getElementById((i+1+1)+"-"+j).style.backgroundColor=="yellow"){clearInterval(id);key=1;return;}
+if(document.getElementById((i+1+1)+"-"+(j-1)).style.backgroundColor=="yellow"){clearInterval(id);key=1;return;}
+if(document.getElementById((i+1)+"-"+(j+1)).style.backgroundColor=="yellow"){clearInterval(id);key=1;return;}
+this.shape1(2);
+i++;
+this.shape1(1);
+
+}
+
+if(flaga==2){
+if(i==18){clearInterval(id);key=1;return;}
+if(document.getElementById((i+1+1+1)+"-"+(j+1)).style.backgroundColor=="yellow"){clearInterval(id);key=1;return;}
+if(document.getElementById((i+1+1)+"-"+j).style.backgroundColor=="yellow"){clearInterval(id);key=1;return;}
+this.shape2(2);
+i++;
+this.shape2(1);
+
+}
+
+
+};
+
+
+}
+//*******************************折叠end*****************************************
+
+//*******************************方块********************************************
+function Fangkuai(){
+var i=1;var j=5;var flaga=1;
+
+this.shape1=function(label){
+if(label==1){var color="yellow";}else{var color="blue";}
+document.getElementById(i+"-"+j).style.backgroundColor=color;
+document.getElementById(i+"-"+(j+1)).style.backgroundColor=color;
+document.getElementById((i+1)+"-"+j).style.backgroundColor=color;
+document.getElementById((i+1)+"-"+(j+1)).style.backgroundColor=color;
+document.onkeydown=function(event){
+if(event.keyCode==40&&i!=19&&document.getElementById((i+1+1)+"-"+j).style.backgroundColor!="yellow"&&document.getElementById((i+1+1)+"-"+(j+1)).style.backgroundColor!="yellow")
+{zj.shape1(2);i++;zj.shape1(1);}
+if(event.keyCode==37&&j!=1&&document.getElementById(i+"-"+(j-1)).style.backgroundColor!="yellow"&&document.getElementById((i+1)+"-"+(j-1)).style.backgroundColor!="yellow")
+{zj.shape1(2);j--;zj.shape1(1);}
+if(event.keyCode==39&&j!=9&&document.getElementById(i+"-"+(j+1+1)).style.backgroundColor!="yellow"&&document.getElementById((i+1)+"-"+(j+1+1)).style.backgroundColor!="yellow")
+{zj.shape1(2);j++;zj.shape1(1);}
+};
+};
+
+
+this.run=function(){
+key=0;
+if(i==19){clearInterval(id);key=1;return;}
+if(document.getElementById((i+1+1)+"-"+j).style.backgroundColor=="yellow"){clearInterval(id);key=1;return;}
+if(document.getElementById((i+1+1)+"-"+(j+1)).style.backgroundColor=="yellow"){clearInterval(id);key=1;return;}
+this.shape1(2);
+i++;
+this.shape1(1);
+};
+
+
+}
+//*******************************方块end******************************************
+//*******************************长条*********************************************
+function Changtiao(){
+var i=1;var j=5;var flaga=1;
+
+this.shape1=function(label){
+if(label==1){var color="yellow";}else{var color="blue";}
+document.getElementById(i+"-"+j).style.backgroundColor=color;
+document.getElementById(i+"-"+(j+1)).style.backgroundColor=color;
+document.getElementById(i+"-"+(j+1+1)).style.backgroundColor=color;
+document.getElementById(i+"-"+(j+1+1+1)).style.backgroundColor=color;
+
+document.onkeydown=function(event){
+if(event.keyCode==40&&i!=20&&document.getElementById((i+1)+"-"+j).style.backgroundColor!="yellow"&&document.getElementById((i+1)+"-"+(j+1)).style.backgroundColor!="yellow"&&document.getElementById((i+1)+"-"+(j+1+1)).style.backgroundColor!="yellow"&&document.getElementById((i+1)+"-"+(j+1+1+1)).style.backgroundColor!="yellow")
+{zj.shape1(2);i++;zj.shape1(1);}
+if(event.keyCode==37&&j!=1&&document.getElementById(i+"-"+(j-1)).style.backgroundColor!="yellow")
+{zj.shape1(2);j--;zj.shape1(1);}
+if(event.keyCode==39&&j!=7&&document.getElementById(i+"-"+(j+1+1+1+1)).style.backgroundColor!="yellow")
+{zj.shape1(2);j++;zj.shape1(1);}
+//-------------------------变形---------------------------
+if(event.keyCode==38)
+{zj.shape1(2);zj.shape2(1);flaga=2;}
+};
+
+};
+
+this.shape2=function(label){
+if(label==1){var color="yellow";}else{var color="blue";}
+document.getElementById(i+"-"+j).style.backgroundColor=color;
+if((i-1)>=1)document.getElementById((i-1)+"-"+j).style.backgroundColor=color;
+if((i-1-1)>=1)document.getElementById((i-1-1)+"-"+j).style.backgroundColor=color;
+if((i-1-1-1)>=1)document.getElementById((i-1-1-1)+"-"+j).style.backgroundColor=color;
+
+document.onkeydown=function(event){
+if(event.keyCode==40&&i!=20&&document.getElementById((i+1)+"-"+j).style.backgroundColor!="yellow")
+{zj.shape2(2);i++;zj.shape2(1);}
+if(event.keyCode==37&&i!=1&&document.getElementById(i+"-"+(j-1)).style.backgroundColor!="yellow"&&document.getElementById((i-1)+"-"+(j-1)).style.backgroundColor!="yellow"&&document.getElementById((i-1-1)+"-"+(j-1)).style.backgroundColor!="yellow"&&document.getElementById((i-1-1-1)+"-"+(j-1)).style.backgroundColor!="yellow")
+{zj.shape2(2);j--;zj.shape2(1);}
+if(event.keyCode==39&&i!=20&&document.getElementById(i+"-"+(j+1)).style.backgroundColor!="yellow"&&document.getElementById((i-1)+"-"+(j+1)).style.backgroundColor!="yellow"&&document.getElementById((i-1-1)+"-"+(j+1)).style.backgroundColor!="yellow"&&document.getElementById((i-1-1-1)+"-"+(j+1)).style.backgroundColor!="yellow")
+{zj.shape2(2);j++;zj.shape2(1);}
+//-------------------------变形---------------------------
+if(event.keyCode==38)
+{zj.shape2(2);zj.shape1(1);flaga=1;}
+};
+
+};
+
+this.run=function(){
+key=0;
+if(flaga==1){
+if(i==20){clearInterval(id);key=1;return;}
+if(document.getElementById((i+1)+"-"+j).style.backgroundColor=="yellow"){clearInterval(id);key=1;return;}
+if(document.getElementById((i+1)+"-"+(j+1)).style.backgroundColor=="yellow"){clearInterval(id);key=1;return;}
+if(document.getElementById((i+1)+"-"+(j+1+1)).style.backgroundColor=="yellow"){clearInterval(id);key=1;return;}
+if(document.getElementById((i+1)+"-"+(j+1+1+1)).style.backgroundColor=="yellow"){clearInterval(id);key=1;return;}
+this.shape1(2);
+i++;
+this.shape1(1);
+}
+
+if(flaga==2){
+if(i==20){clearInterval(id);key=1;return;}
+if(document.getElementById((i+1)+"-"+j).style.backgroundColor=="yellow"){clearInterval(id);key=1;return;}
+this.shape2(2);
+i++;
+this.shape2(1);
+}
+
+
+};
+
+
+}
+//*******************************长条end******************************************
+
+//********************************拐弯左*********************************************
+function Guaiwan(){
+var i=1;var j=5;var flaga=1;
+
+this.shape1=function(label){
+if(label==1){var color="yellow";}else{var color="blue";}
+document.getElementById(i+"-"+j).style.backgroundColor=color;
+document.getElementById(i+"-"+(j+1)).style.backgroundColor=color;
+document.getElementById(i+"-"+(j-1)).style.backgroundColor=color;
+if((i-1)>=1)document.getElementById((i-1)+"-"+(j-1)).style.backgroundColor=color;
+
+document.onkeydown=function(event){
+if(event.keyCode==40&&i!=20&&document.getElementById((i+1)+"-"+j).style.backgroundColor!="yellow"&&document.getElementById((i+1)+"-"+(j+1)).style.backgroundColor!="yellow"&&document.getElementById((i+1)+"-"+(j-1)).style.backgroundColor!="yellow")
+{zj.shape1(2);i++;zj.shape1(1);}
+if(event.keyCode==37&&j!=2&&document.getElementById((i)+"-"+(j-1-1)).style.backgroundColor!="yellow"&&document.getElementById((i-1)+"-"+(j-1-1)).style.backgroundColor!="yellow")
+{zj.shape1(2);j--;zj.shape1(1);}
+if(event.keyCode==39&&j!=9&&document.getElementById(i+"-"+(j+1+1)).style.backgroundColor!="yellow"&&document.getElementById((i-1)+"-"+j).style.backgroundColor!="yellow")
+{zj.shape1(2);j++;zj.shape1(1);}
+
+//-------------------------变形---------------------------
+if(event.keyCode==38)
+{zj.shape1(2);zj.shape2(1);flaga=2;}
+};
+
+};
+
+
+this.shape2=function(label){
+if(label==1){var color="yellow";}else{var color="blue";}
+document.getElementById(i+"-"+j).style.backgroundColor=color;
+document.getElementById((i+1)+"-"+j).style.backgroundColor=color;
+document.getElementById((i-1)+"-"+j).style.backgroundColor=color;
+document.getElementById((i-1)+"-"+(j+1)).style.backgroundColor=color;
+
+document.onkeydown=function(event){
+if(event.keyCode==40&&i!=19&&document.getElementById((i+1+1)+"-"+j).style.backgroundColor!="yellow"&&document.getElementById(i+"-"+(j+1)).style.backgroundColor!="yellow")
+{zj.shape2(2);i++;zj.shape2(1);}
+if(event.keyCode==37&&j!=1&&document.getElementById(i+"-"+(j-1)).style.backgroundColor!="yellow"&&document.getElementById((i+1)+"-"+(j-1)).style.backgroundColor!="yellow"&&document.getElementById((i-1)+"-"+(j-1)).style.backgroundColor!="yellow")
+{zj.shape2(2);j--;zj.shape2(1);}
+if(event.keyCode==39&&i!=9&&document.getElementById(i+"-"+(j+1)).style.backgroundColor!="yellow"&&document.getElementById((i+1)+"-"+(j+1)).style.backgroundColor!="yellow"&&document.getElementById((i-1)+"-"+(j+1+1)).style.backgroundColor!="yellow")
+{zj.shape2(2);j++;zj.shape2(1);}
+//-------------------------变形---------------------------
+if(event.keyCode==38)
+{zj.shape2(2);zj.shape3(1);flaga=3;}
+
+};
+
+};
+
+
+this.shape3=function(label){
+if(label==1){var color="yellow";}else{var color="blue";}
+document.getElementById(i+"-"+j).style.backgroundColor=color;
+document.getElementById(i+"-"+(j-1)).style.backgroundColor=color;
+document.getElementById(i+"-"+(j+1)).style.backgroundColor=color;
+document.getElementById((i+1)+"-"+(j+1)).style.backgroundColor=color;
+
+document.onkeydown=function(event){
+if(event.keyCode==40&&i!=19&&document.getElementById((i+1)+"-"+j).style.backgroundColor!="yellow"&&document.getElementById((i+1)+"-"+(j-1)).style.backgroundColor!="yellow"&&document.getElementById((i+1+1)+"-"+(j+1)).style.backgroundColor!="yellow")
+{zj.shape3(2);i++;zj.shape3(1);}
+if(event.keyCode==37&&j!=2&&document.getElementById(i+"-"+(j-1-1)).style.backgroundColor!="yellow"&&document.getElementById((i+1)+"-"+j).style.backgroundColor!="yellow")
+{zj.shape3(2);j--;zj.shape3(1);}
+if(event.keyCode==39&&j!=9&&document.getElementById(i+"-"+(j+1+1)).style.backgroundColor!="yellow"&&document.getElementById((i+1)+"-"+(j+1+1)).style.backgroundColor!="yellow")
+{zj.shape3(2);j++;zj.shape3(1);}
+//-------------------------变形---------------------------
+if(event.keyCode==38)
+{zj.shape3(2);zj.shape4(1);flaga=4;}
+};
+
+};
+
+
+this.shape4=function(label){
+if(label==1){var color="yellow";}else{var color="blue";}
+document.getElementById(i+"-"+j).style.backgroundColor=color;
+document.getElementById((i-1)+"-"+j).style.backgroundColor=color;
+document.getElementById((i+1)+"-"+j).style.backgroundColor=color;
+document.getElementById((i+1)+"-"+(j-1)).style.backgroundColor=color;
+
+
+document.onkeydown=function(event){
+if(event.keyCode==40&&i!=19&&document.getElementById((i+1+1)+"-"+j).style.backgroundColor!="yellow"&&document.getElementById((i+1+1)+"-"+(j-1)).style.backgroundColor!="yellow")
+{zj.shape4(2);i++;zj.shape4(1);}
+if(event.keyCode==37&&j!=2&&document.getElementById((i+1)+"-"+(j-1-1)).style.backgroundColor!="yellow"&&document.getElementById(i+"-"+(j-1)).style.backgroundColor!="yellow"&&document.getElementById((i-1)+"-"+(j-1)).style.backgroundColor!="yellow")
+{zj.shape4(2);j--;zj.shape4(1);}
+if(event.keyCode==39&&j!=10&&document.getElementById((i)+"-"+(j+1)).style.backgroundColor!="yellow"&&document.getElementById((i+1)+"-"+(j+1)).style.backgroundColor!="yellow"&&document.getElementById((i-1)+"-"+(j+1)).style.backgroundColor!="yellow")
+{zj.shape4(2);j++;zj.shape4(1);}
+//------------------------变形-----------------------------
+if(event.keyCode==38)
+{zj.shape4(2);zj.shape1(1);flaga=1;}
+};
+
+};
+
+
+this.run=function(){
+key=0;
+if(flaga==1){
+if(i==20){clearInterval(id);key=1;return;}
+if(document.getElementById((i+1)+"-"+j).style.backgroundColor=="yellow"){clearInterval(id);key=1;return;}
+if(document.getElementById((i+1)+"-"+(j+1)).style.backgroundColor=="yellow"){clearInterval(id);key=1;return;}
+if(document.getElementById((i+1)+"-"+(j-1)).style.backgroundColor=="yellow"){clearInterval(id);key=1;return;}
+this.shape1(2);
+i++;
+this.shape1(1);
+}
+
+if(flaga==2){
+if(i==19){clearInterval(id);key=1;return;}
+if(document.getElementById((i+1+1)+"-"+j).style.backgroundColor=="yellow"){clearInterval(id);key=1;return;}
+if(document.getElementById(i+"-"+(j+1)).style.backgroundColor=="yellow"){clearInterval(id);key=1;return;}
+this.shape2(2);
+i++;
+this.shape2(1);
+}
+
+if(flaga==3){
+if(i==19){clearInterval(id);key=1;return;}
+if(document.getElementById((i+1+1)+"-"+(j+1)).style.backgroundColor=="yellow"){clearInterval(id);key=1;return;}
+if(document.getElementById((i+1)+"-"+j).style.backgroundColor=="yellow"){clearInterval(id);key=1;return;}
+if(document.getElementById((i+1)+"-"+(j-1)).style.backgroundColor=="yellow"){clearInterval(id);key=1;return;}
+this.shape3(2);
+i++;
+this.shape3(1);
+}
+
+if(flaga==4){
+if(i==19){clearInterval(id);key=1;return;}
+if(document.getElementById((i+1+1)+"-"+j).style.backgroundColor=="yellow"){clearInterval(id);key=1;return;}
+if(document.getElementById((i+1+1)+"-"+(j-1)).style.backgroundColor=="yellow"){clearInterval(id);key=1;return;}
+this.shape4(2);
+i++;
+this.shape4(1);
+}
+
+
+};
+
+}
+//*********************************拐弯左end****************************************
+
+//*********************************拐弯右*******************************************
+function Guaiwanr(){
+var i=1;var j=5;var flaga=1;
+
+this.shape1=function(label){
+if(label==1){var color="yellow";}else{var color="blue";}
+document.getElementById(i+"-"+j).style.backgroundColor=color;
+document.getElementById(i+"-"+(j-1)).style.backgroundColor=color;
+document.getElementById(i+"-"+(j+1)).style.backgroundColor=color;
+if(i-1>=1)document.getElementById((i-1)+"-"+(j+1)).style.backgroundColor=color;
+
+document.onkeydown=function(event){
+if(event.keyCode==40&&i!=20&&document.getElementById((i+1)+"-"+j).style.backgroundColor!="yellow"&&document.getElementById((i+1)+"-"+(j+1)).style.backgroundColor!="yellow"&&document.getElementById((i+1)+"-"+(j-1)).style.backgroundColor!="yellow")
+{zj.shape1(2);i++;zj.shape1(1);}
+if(event.keyCode==37&&j!=2&&document.getElementById(i+"-"+(j-1-1)).style.backgroundColor!="yellow"&&document.getElementById((i-1)+"-"+j).style.backgroundColor!="yellow")
+{zj.shape1(2);j--;zj.shape1(1);}
+if(event.keyCode==39&&j!=9&&document.getElementById(i+"-"+(j+1+1)).style.backgroundColor!="yellow"&&document.getElementById((i-1)+"-"+(j+1+1)).style.backgroundColor!="yellow")
+{zj.shape1(2);j++;zj.shape1(1);}
+//----------------------变形---------------------
+if(event.keyCode==38)
+{zj.shape1(2);zj.shape2(1);flaga=2;}
+
+};
+
+};
+
+this.shape2=function(label){
+if(label==1){var color="yellow";}else{var color="blue";}
+document.getElementById(i+"-"+j).style.backgroundColor=color;
+document.getElementById((i-1)+"-"+j).style.backgroundColor=color;
+document.getElementById((i+1)+"-"+j).style.backgroundColor=color;
+document.getElementById((i+1)+"-"+(j+1)).style.backgroundColor=color;
+
+document.onkeydown=function(event){
+if(event.keyCode==40&&i!=19&&document.getElementById((i+1+1)+"-"+j).style.backgroundColor!="yellow"&&document.getElementById((i+1+1)+"-"+(j+1)).style.backgroundColor!="yellow")
+{zj.shape2(2);i++;zj.shape2(1);}
+if(event.keyCode==37&&j!=1&&document.getElementById(i+"-"+(j-1)).style.backgroundColor!="yellow"&&document.getElementById((i+1)+"-"+(j-1)).style.backgroundColor!="yellow"&&document.getElementById((i-1)+"-"+(j-1)).style.backgroundColor!="yellow")
+{zj.shape2(2);j--;zj.shape2(1);}
+if(event.keyCode==39&&j!=9&&document.getElementById((i+1)+"-"+(j+1+1)).style.backgroundColor!="yellow"&&document.getElementById((i-1)+"-"+(j+1)).style.backgroundColor!="yellow"&&document.getElementById((i-1-1)+"-"+(j+1)).style.backgroundColor!="yellow")
+{zj.shape2(2);j++;zj.shape2(1);}
+//-----------------------变形------------------------
+if(event.keyCode==38)
+{zj.shape2(2);zj.shape3(1);flaga=3;}
+};
+
+};
+
+this.shape3=function(label){
+if(label==1){var color="yellow";}else{var color="blue";}
+document.getElementById(i+"-"+j).style.backgroundColor=color;
+document.getElementById(i+"-"+(j+1)).style.backgroundColor=color;
+document.getElementById(i+"-"+(j-1)).style.backgroundColor=color;
+document.getElementById((i+1)+"-"+(j-1)).style.backgroundColor=color;
+
+document.onkeydown=function(event){
+if(event.keyCode==40&&i!=19&&document.getElementById((i+1+1)+"-"+(j-1)).style.backgroundColor!="yellow"&&document.getElementById((i+1)+"-"+j).style.backgroundColor!="yellow"&&document.getElementById((i+1)+"-"+(j+1)).style.backgroundColor!="yellow")
+{zj.shape3(2);i++;zj.shape3(1);}
+if(event.keyCode==37&&j!=2&&document.getElementById((i+1)+"-"+(j-1-1)).style.backgroundColor!="yellow"&&document.getElementById(i+"-"+(j-1-1)).style.backgroundColor!="yellow")
+{zj.shape3(2);j--;zj.shape3(1);}
+if(event.keyCode==39&&j!=9&&document.getElementById((i+1)+"-"+j).style.backgroundColor!="yellow"&&document.getElementById(i+"-"+(j+1+1)).style.backgroundColor!="yellow")
+{zj.shape3(2);j++;zj.shape3(1);}
+//-------------------变形------------------------------
+if(event.keyCode==38)
+{zj.shape3(2);zj.shape4(1);flaga=4;}
+};
+};
+
+this.shape4=function(label){
+if(label==1){var color="yellow";}else{var color="blue";}
+document.getElementById(i+"-"+j).style.backgroundColor=color;
+document.getElementById((i+1)+"-"+j).style.backgroundColor=color;
+document.getElementById((i-1)+"-"+j).style.backgroundColor=color;
+document.getElementById((i-1)+"-"+(j-1)).style.backgroundColor=color;
+
+document.onkeydown=function(event){
+if(event.keyCode==40&&i!=19&&document.getElementById((i+1+1)+"-"+j).style.backgroundColor!="yellow"&&document.getElementById(i+"-"+(j-1)).style.backgroundColor!="yellow")
+{zj.shape4(2);i++;zj.shape4(1);}
+if(event.keyCode==37&&j!=2&&document.getElementById(i+"-"+(j-1)).style.backgroundColor!="yellow"&&document.getElementById((i+1)+"-"+(j-1)).style.backgroundColor!="yellow"&&document.getElementById((i-1)+"-"+(j-1-1)).style.backgroundColor!="yellow")
+{zj.shape4(2);j--;zj.shape4(1);}
+if(event.keyCode==39&&j!=10&&document.getElementById((i)+"-"+(j+1)).style.backgroundColor!="yellow"&&document.getElementById((i+1)+"-"+(j+1)).style.backgroundColor!="yellow"&&document.getElementById((i-1)+"-"+(j+1)).style.backgroundColor!="yellow")
+{zj.shape4(2);j++;zj.shape4(1);}
+//---------------------变形------------------------
+if(event.keyCode==38)
+{zj.shape4(2);zj.shape1(1);flaga=1;}
+};
+
+};
+
+this.run=function(){
+key=0;
+if(flaga==1){
+if(i==20){clearInterval(id);key=1;return;}
+if(document.getElementById((i+1)+"-"+j).style.backgroundColor=="yellow"){clearInterval(id);key=1;return;}
+if(document.getElementById((i+1)+"-"+(j+1)).style.backgroundColor=="yellow"){clearInterval(id);key=1;return;}
+if(document.getElementById((i+1)+"-"+(j-1)).style.backgroundColor=="yellow"){clearInterval(id);key=1;return;}
+this.shape1(2);
+i++;
+this.shape1(1);
+}
+
+if(flaga==2){
+if(i==19){clearInterval(id);key=1;return;}
+if(document.getElementById((i+1+1)+"-"+j).style.backgroundColor=="yellow"){clearInterval(id);key=1;return;}
+if(document.getElementById((i+1+1)+"-"+(j+1)).style.backgroundColor=="yellow"){clearInterval(id);key=1;return;}
+this.shape2(2);
+i++;
+this.shape2(1);
+}
+
+if(flaga==3){
+if(i==19){clearInterval(id);key=1;return;}
+if(document.getElementById((i+1+1)+"-"+(j-1)).style.backgroundColor=="yellow"){clearInterval(id);key=1;return;}
+if(document.getElementById((i+1)+"-"+j).style.backgroundColor=="yellow"){clearInterval(id);key=1;return;}
+if(document.getElementById((i+1)+"-"+(j+1)).style.backgroundColor=="yellow"){clearInterval(id);key=1;return;}
+this.shape3(2);
+i++;
+this.shape3(1);
+}
+
+if(flaga==4){
+if(i==19){clearInterval(id);key=1;return;}
+if(document.getElementById((i+1+1)+"-"+j).style.backgroundColor=="yellow"){clearInterval(id);key=1;return;}
+if(document.getElementById(i+"-"+(j-1)).style.backgroundColor=="yellow"){clearInterval(id);key=1;return;}
+this.shape4(2);
+i++;
+this.shape4(1);
+}
+
+};
+
+}
+//*********************************拐弯右end****************************************
+
+//*********************************品字*********************************************
+
+function Pinzi(){
+var i=1;var j=5;var flaga=1;
+
+this.shape1=function(label){
+if(label==1){var color="yellow";}else{var color="blue";}
+document.getElementById(i+"-"+j).style.backgroundColor=color;
+document.getElementById(i+"-"+(j+1)).style.backgroundColor=color;
+document.getElementById(i+"-"+(j-1)).style.backgroundColor=color;
+if(i-1>=1)document.getElementById((i-1)+"-"+j).style.backgroundColor=color;
+
+document.onkeydown=function(event){
+if(event.keyCode==40&&i!=20&&document.getElementById((i+1)+"-"+j).style.backgroundColor!="yellow"&&document.getElementById((i+1)+"-"+(j+1)).style.backgroundColor!="yellow"&&document.getElementById((i+1)+"-"+(j-1)).style.backgroundColor!="yellow")
+{zj.shape1(2);i++;zj.shape1(1);}
+if(event.keyCode==37&&j!=2&&document.getElementById(i+"-"+(j-1-1)).style.backgroundColor!="yellow"&&document.getElementById((i-1)+"-"+(j-1)).style.backgroundColor!="yellow")
+{zj.shape1(2);j--;zj.shape1(1);}
+if(event.keyCode==39&&j!=9&&document.getElementById(i+"-"+(j+1+1)).style.backgroundColor!="yellow"&&document.getElementById((i-1)+"-"+(j+1)).style.backgroundColor!="yellow")
+{zj.shape1(2);j++;zj.shape1(1);}
+//---------------------变形------------------------
+if(event.keyCode==38)
+{zj.shape1(2);zj.shape2(1);flaga=2;}
+
+};
+
+};
+
+this.shape2=function(label){
+if(label==1){var color="yellow";}else{var color="blue";}
+document.getElementById(i+"-"+j).style.backgroundColor=color;
+document.getElementById(i+"-"+(j+1)).style.backgroundColor=color;
+document.getElementById((i+1)+"-"+j).style.backgroundColor=color;
+document.getElementById((i-1)+"-"+j).style.backgroundColor=color;
+
+document.onkeydown=function(event){
+if(event.keyCode==40&&i!=19&&document.getElementById((i+1+1)+"-"+j).style.backgroundColor!="yellow"&&document.getElementById((i+1)+"-"+(j+1)).style.backgroundColor!="yellow")
+{zj.shape2(2);i++;zj.shape2(1);}
+if(event.keyCode==37&&j!=1&&document.getElementById(i+"-"+(j-1)).style.backgroundColor!="yellow"&&document.getElementById((i-1)+"-"+(j-1)).style.backgroundColor!="yellow"&&document.getElementById((i+1)+"-"+(j-1)).style.backgroundColor!="yellow")
+{zj.shape2(2);j--;zj.shape2(1);}
+if(event.keyCode==39&&j!=9&&document.getElementById((i+1)+"-"+(j+1)).style.backgroundColor!="yellow"&&document.getElementById(i+"-"+(j+1+1)).style.backgroundColor!="yellow"&&document.getElementById((i-1)+"-"+(j+1)).style.backgroundColor!="yellow")
+{zj.shape2(2);j++;zj.shape2(1);}
+//---------------------变形------------------------
+if(event.keyCode==38)
+{zj.shape2(2);zj.shape3(1);flaga=3;}
+};
+};
+
+this.shape3=function(label){
+if(label==1){var color="yellow";}else{var color="blue";}
+document.getElementById(i+"-"+j).style.backgroundColor=color;
+document.getElementById(i+"-"+(j+1)).style.backgroundColor=color;
+document.getElementById(i+"-"+(j-1)).style.backgroundColor=color;
+document.getElementById((i+1)+"-"+j).style.backgroundColor=color;
+
+document.onkeydown=function(event){
+if(event.keyCode==40&&i!=19&&document.getElementById((i+1+1)+"-"+j).style.backgroundColor!="yellow"&&document.getElementById((i+1)+"-"+(j+1)).style.backgroundColor!="yellow"&&document.getElementById((i+1)+"-"+(j-1)).style.backgroundColor!="yellow")
+{zj.shape3(2);i++;zj.shape3(1);}
+if(event.keyCode==37&&j!=2&&document.getElementById(i+"-"+(j-1-1)).style.backgroundColor!="yellow"&&document.getElementById((i+1)+"-"+(j-1)).style.backgroundColor!="yellow")
+{zj.shape3(2);j--;zj.shape3(1);}
+if(event.keyCode==39&&j!=9&&document.getElementById((i+1)+"-"+(j+1)).style.backgroundColor!="yellow"&&document.getElementById(i+"-"+(j+1+1)).style.backgroundColor!="yellow")
+{zj.shape3(2);j++;zj.shape3(1);}
+//---------------------变形------------------------
+if(event.keyCode==38)
+{zj.shape3(2);zj.shape4(1);flaga=4;}
+};
+};
+
+this.shape4=function(label){
+if(label==1){var color="yellow";}else{var color="blue";}
+document.getElementById(i+"-"+j).style.backgroundColor=color;
+document.getElementById((i+1)+"-"+j).style.backgroundColor=color;
+document.getElementById((i-1)+"-"+j).style.backgroundColor=color;
+document.getElementById(i+"-"+(j-1)).style.backgroundColor=color;
+
+document.onkeydown=function(event){
+if(event.keyCode==40&&i!=19&&document.getElementById((i+1+1)+"-"+j).style.backgroundColor!="yellow"&&document.getElementById((i+1)+"-"+(j-1)).style.backgroundColor!="yellow")
+{zj.shape4(2);i++;zj.shape4(1);}
+if(event.keyCode==37&&j!=2&&document.getElementById((i-1)+"-"+(j-1)).style.backgroundColor!="yellow"&&document.getElementById((i+1)+"-"+(j-1)).style.backgroundColor!="yellow"&&document.getElementById(i+"-"+(j-1-1)).style.backgroundColor!="yellow")
+{zj.shape4(2);j--;zj.shape4(1);}
+if(event.keyCode==39&&j!=10&&document.getElementById((i+1)+"-"+(j+1)).style.backgroundColor!="yellow"&&document.getElementById(i+"-"+(j+1)).style.backgroundColor!="yellow"&&document.getElementById((i-1)+"-"+(j+1)).style.backgroundColor!="yellow")
+{zj.shape4(2);j++;zj.shape4(1);}
+//---------------------变形------------------------
+if(event.keyCode==38)
+{zj.shape4(2);zj.shape1(1);flaga=1;}
+};
+};
+
+this.run=function(){
+key=0;
+if(flaga==1){
+if(i==20){clearInterval(id);key=1;return;}
+if(document.getElementById((i+1)+"-"+j).style.backgroundColor=="yellow"){clearInterval(id);key=1;return;}
+if(document.getElementById((i+1)+"-"+(j+1)).style.backgroundColor=="yellow"){clearInterval(id);key=1;return;}
+if(document.getElementById((i+1)+"-"+(j-1)).style.backgroundColor=="yellow"){clearInterval(id);key=1;return;}
+this.shape1(2);
+i++;
+this.shape1(1);
+}
+
+if(flaga==2){
+if(i==19){clearInterval(id);key=1;return;}
+if(document.getElementById((i+1+1)+"-"+j).style.backgroundColor=="yellow"){clearInterval(id);key=1;return;}
+if(document.getElementById((i+1)+"-"+(j+1)).style.backgroundColor=="yellow"){clearInterval(id);key=1;return;}
+this.shape2(2);
+i++;
+this.shape2(1);
+}
+
+if(flaga==3){
+if(i==19){clearInterval(id);key=1;return;}
+if(document.getElementById((i+1+1)+"-"+j).style.backgroundColor=="yellow"){clearInterval(id);key=1;return;}
+if(document.getElementById((i+1)+"-"+(j-1)).style.backgroundColor=="yellow"){clearInterval(id);key=1;return;}
+if(document.getElementById((i+1)+"-"+(j+1)).style.backgroundColor=="yellow"){clearInterval(id);key=1;return;}
+this.shape3(2);
+i++;
+this.shape3(1);
+}
+
+if(flaga==4){
+if(i==19){clearInterval(id);key=1;return;}
+if(document.getElementById((i+1+1)+"-"+j).style.backgroundColor=="yellow"){clearInterval(id);key=1;return;}
+if(document.getElementById((i+1)+"-"+(j-1)).style.backgroundColor=="yellow"){clearInterval(id);key=1;return;}
+this.shape4(2);
+i++;
+this.shape4(1);
+}
+
+};
+
+}
+
+//*********************************品字end******************************************
+//var zj=new Pinzi();
+//var id=setInterval(function(){zj.run.call(zj)},1000);
+
+//***********************************运行********************************************
+
+
+function go(){
+var tag;
+tag=Math.random();
+if(0.167>tag&&tag>=0){zj=new Zhedie();id=setInterval(function(){zj.run.call(zj)},1000);}
+if(0.334>tag&&tag>=0.167){zj=new Fangkuai();id=setInterval(function(){zj.run.call(zj)},1000);}
+if(0.501>tag&&tag>=0.334){zj=new Changtiao();id=setInterval(function(){zj.run.call(zj)},1000);}
+if(0.668>tag&&tag>=0.501){zj=new Guaiwan();id=setInterval(function(){zj.run.call(zj)},1000);}
+if(0.835>tag&&tag>=0.668){zj=new Guaiwanr();id=setInterval(function(){zj.run.call(zj)},1000);}
+if(1>=tag&&tag>=0.835){zj=new Pinzi();id=setInterval(function(){zj.run.call(zj)},1000);}
+return;
+}
+//-----------------------------gameoverTest------------------------
+
+function gameoverTest(){
+for(var j=1;j<10;j++)
+{
+if(document.getElementById(2+"-"+j).style.backgroundColor=="yellow"){clearInterval(id_game);alert("傻逼GameOver");}
+}
+}
+//-------------------------------消除计分----------------------------
+function eliminate(){
+
+//---------------------循环1------------------------
+for(var i=20;i>=1;i--){
+//-----------------------循环2----------------------
+for(var n=0,j=1;j<=10;j++){
+if(document.getElementById(i+"-"+j).style.backgroundColor=="yellow"){n++}
+//-------------------------if--------------------------------
+if(n==10){
+score+=10;
+document.getElementById("score").innerHTML=""+score;
+//-----------------------循环3------------------------
+for(var k=1;k<=10;k++){document.getElementById(i+"-"+k).style.backgroundColor="blue";}
+//-----------------------循环4-----------------------
+for(var row=i-1;row>=1;row--){
+//------------------------循环5------------------------
+for(k=1;k<=10;k++){
+if(document.getElementById(row+"-"+k).style.backgroundColor=="yellow")
+{
+document.getElementById(row+"-"+k).style.backgroundColor="blue";
+document.getElementById((row+1)+"-"+k).style.backgroundColor="yellow";
+}
+//-------------------------5end--------------------------------------
+}
+
+//-------------------------4end--------------------------------------
+}
+i++;
+//-------------------------if-end------------------------------------
+}
+//--------------------------2end-------------------------------------
+}
+//--------------------------1end------------------------------------
+}
+
+}
+
+//---------------------------彩蛋--------------------------------
+
+function scare(){
+var id_scare;var flags=1;
+document.getElementById("scare").style.visibility="visible";
+
+function shake(){
+
+if(flags==1){
+document.getElementById("scare").style.visibility="hidden";flags=2;
+}else{
+document.getElementById("scare").style.visibility="visible";flags=1;
+}
+}
+
+id_scare=setInterval(shake,250);
+setTimeout(function(){clearInterval(id_scare);},10000);
+}
+
+
+
+//-----------------------------practic---------------------------------
+
+go();
+id_game=setInterval(function(){if(key==1){key=0;gameoverTest();eliminate();go();}},500);
+id_suprise=setInterval(function(){if(score==100){clearInterval(id_suprise);scare();}},500);
+
+//---------------------------模块测试代码------------------------------
+//zj=new Guaiwanr();key=0;id=setInterval(function(){zj.run.call(zj)},1000); 
+
+};
+
+</script>
+</head>
+
+<body>
+<div id="cal">Score:<span id="score" style="color:yellow;">0</span><span style="font-size:12px">达到100分有惊喜!</span></id>
+<div id="container" onclick="alert('pause')">
+</div>
+<img id="scare" style="width:400px;height:400px;position:absolute;top:0px;left:210px;visibility:hidden;" src="http://i65.tinypic.com/35jgepy.jpg"/>
+
+<script>
+function lay(){
+var s="";
+for(var i=1;i<=21;i++)
+for(var j=1;j<=10;j++)
+{s+="<div id=\""+i+"-"+j+"\"></div>";}
+return s;
+}
+document.getElementById("container").innerHTML=lay();
+//document.getElementById("18-5").style.backgroundColor="yellow";
+</script>
+
+</body>
+</html>
